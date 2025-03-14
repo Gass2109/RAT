@@ -2,18 +2,19 @@
 set -e
 set -x
 export LANG=en_US.UTF-8
-#export CUDA_VISIBLE_DEVICES=5
+#export CUDA_VISIBLE_DEVICES=1
 pip install pandas
+pip install matplotlib
 
 
 
-LOG_DIR=${HOME}/PGPortfolio-master/PGPortfolio-master/pgportfolio/RAT/log
+LOG_DIR=/drive2/omar/End_to_End_ML_models/RAT/log
 if [ ! -d "$LOG_DIR" ]; then
   echo "Creating ${LOG_DIR} ..."
   mkdir -p ${LOG_DIR}
 fi
 
-MODEL_DIR=${HOME}/PGPortfolio-master/PGPortfolio-master/pgportfolio/RAT/model
+MODEL_DIR=/drive2/omar/End_to_End_ML_models/RAT/model
 if [ ! -d "$MODEL_DIR" ]; then
   echo "Creating ${MODEL_DIR} ..."
   mkdir -p ${MODEL_DIR}
@@ -21,7 +22,7 @@ fi
 
 
 
-for MODEL_INDEX in 1 2 3 4 5;
+for MODEL_INDEX in 1 ; #2 3 4 5;
 do
 for X_WINDOW_SIZE in 31;
 do
@@ -74,6 +75,7 @@ python main.py \
 --local_context_length ${LOCAL_CONTEXT_LENGTH} \
 --weight_decay ${WEIGHT_DECAY} \
 --daily_interest_rate ${DAILY_INTEREST_RATE} \
+--device cpu \
 --log_dir ${INFOR_DIR} #> ${INFOR_DIR}/${MODEL_INDEX}_info.txt 2>&1 
 done
 done
